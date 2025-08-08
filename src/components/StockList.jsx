@@ -176,7 +176,7 @@ const StocksList = () => {
   <tr>
     <th>Symbol</th>
     <th>Name</th>
-    <th>Actions</th> {/* New column */}
+    <th>Actions</th>
   </tr>
 </thead>
 
@@ -218,7 +218,6 @@ const StocksList = () => {
     ))}
   </AnimatePresence>
 </tbody>
-
             </table>
           </motion.div>
         )}
