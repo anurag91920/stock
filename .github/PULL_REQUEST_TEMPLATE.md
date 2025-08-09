@@ -11,8 +11,10 @@ _Example: Add Linear Regression model for stock prediction_
 
 - **Name:** _Enter your name here_
 - **GitHub ID:** _Enter your GitHub username here_
+- **LinkedIn Username (for appreciation):** _Enter your LinkedIn username here_
+- **LinkedIn Profile URL (for verification):** _Enter your LinkedIn Profile Url here_
 - **Email ID (for communication):** _Enter your email address here_
-- **Participation Program (if any):** _e.g., GSSOC, Hacktoberfest, None_
+- **Participation Program (if any):** _e.g., GSSOC, OSCI, Hacktoberfest, None_
 
 #### Closes
 
