@@ -1,3 +1,4 @@
+// App.js
 import React from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import StocksList from "./components/StockList";
@@ -7,7 +8,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import { AuthProvider } from "./components/AuthContext"; // import AuthProvider
+import AboutComponent from "./components/About";
+import { AuthProvider } from "./components/AuthContext"; // mock provider
 
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/stock/:ticker" element={<Stockdata />} />
+              <Route path="/about" element={<AboutComponent />} />
+              <Route path="/stocks" element={<StocksList />} />
             </Routes>
           </div>
           <Footer />

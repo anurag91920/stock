@@ -624,6 +624,31 @@ strong {
   margin-top: 20px;
 }
 
+/*=======================================For about us page=====================================*/
+/*====== Installed react-icons for icons ======*/
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Always 3 columns */
+  gap: 30px;
+  padding: 20px;
+}
+.grid-item {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.grid-item:hover {
+  transform: translateY(-10px); /* slight lift */
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* deeper shadow */
+}
+
+/*======================================*/
+
 /* --- ALL RESPONSIVE STYLES --- */
 
 /* For Tablets and Mobile */
@@ -669,7 +694,11 @@ strong {
     text-align: center;
   }
 }
-
+@media (max-width: 900px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  }
+}
 /* For Smaller Mobile Devices */
 @media (max-width: 500px) {
   .section2 {
@@ -739,7 +768,12 @@ strong {
 
   /* Note: The old .footer-content style was here and has been removed */
 }
-
+/* For mobile phones */
+@media (max-width: 600px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* 1 column */
+  }
+}
 /* For Very Small Mobile Devices */
 @media (max-width: 360px) {
   input[type="text"] {
