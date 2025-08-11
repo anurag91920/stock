@@ -1,6 +1,16 @@
-# Stock Analyzer
+# AI Stock Analyzer
 
 The **Stock Analyzer** project is a complete stock market analysis tool utilizing ML models. It allows users to input stock symbols, select date ranges, view historical stock trends, and see future stock price predictions via interactive charts.
+
+<div align = "center"
+    
+<img alt="Stars" src="https://img.shields.io/github/stars/SrigadaAkshayKumar/stock?style=flat&logo=github"/>
+<img alt="Forks" src="https://img.shields.io/github/forks/SrigadaAkshayKumar/stock?style=flat&logo=github"/>
+<img alt="Issues" src="https://img.shields.io/github/issues/SrigadaAkshayKumar/stock?style=flat&logo=github"/>
+<img alt="Issues Closed" src="https://img.shields.io/github/issues-closed/SrigadaAkshayKumar/stock?style=flat&logo=github"/>
+<img alt="Open Pull Requests" src="https://img.shields.io/github/issues-pr/SrigadaAkshayKumar/stock?style=flat&logo=github"/>
+<img alt="Close Pull Requests" src="https://img.shields.io/github/issues-pr-closed/SrigadaAkshayKumar/stock?style=flat&color=green&logo=github"/>
+</div>
 
 ## Live Demo
 
@@ -102,7 +112,7 @@ We have a clear roadmap for improvements:
 
 - Allow more API calls per day
 - Reduce response time for end users
-- Add Internatinal stock exchanges
+- Add International stock exchanges
 - Enhance the user interface for better experience
 - Improve machine learning model accuracy
 - Provide more insightful and interactive visualizations

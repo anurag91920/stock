@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from "../components/firebase";
 import { useNavigate, Link } from "react-router-dom";
+import { syncLocalToFirebase } from "../utils/watchlistManager";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,17 +11,21 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setError("");
+  e.preventDefault();
+  setError("");
 
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      alert("Login successful!");
-      navigate("/");
-    } catch (err) {
-      setError("Invalid email or password");
-    }
-  };
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    
+   
+    await syncLocalToFirebase(); 
+
+    alert("Login successful!");
+    navigate("/");
+  } catch (err) {
+    setError("Invalid email or password");
+  }
+};
 
   return (
     <div className="auth-container">

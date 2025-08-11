@@ -9,7 +9,9 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AboutComponent from "./components/About";
-import { AuthProvider } from "./components/AuthContext"; // mock provider
+import { AuthProvider } from "./components/AuthContext";
+import Watchlist from "./pages/Watchlist";
+import ContactForm from "./components/ContactForm";
 
 const App = () => {
   return (
@@ -25,13 +27,15 @@ const App = () => {
               <Route path="/stock/:ticker" element={<Stockdata />} />
               <Route path="/about" element={<AboutComponent />} />
               <Route path="/stocks" element={<StocksList />} />
+              <Route path="/watchlist" element={<Watchlist />} />
+              <Route path="/contact" element={<ContactForm />} />
             </Routes>
           </div>
-          <Footer />
         </div>
       </Router>
     </AuthProvider>
   );
 };
+
 
 export default App;
