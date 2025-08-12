@@ -832,6 +832,24 @@ strong {
   box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
 }
 
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.news-header h3 {
+  flex: 1;
+  margin: 0;
+}
+
+.sentiment-tag {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 /* --- PREDICTION ANIMATIONS --- */
 .predict {
   width: 100%;
