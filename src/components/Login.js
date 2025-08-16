@@ -11,16 +11,24 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
-    // Mock login logic (for development only)
-    if (email === "test@example.com" && password === "password") {
-      alert("Login successful!");
-      navigate("/");
-    } else {
-      setError("Invalid email or password");
+    try {
+      // Firebase authentication
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      // Sync local data to Firebase after login
+      await syncLocalToFirebase(userCredential.user);
+
+      navigate("/"); // redirect to home page
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -46,15 +54,13 @@ const Login = () => {
           {error && <p className="login-error">{error}</p>}
           <button type="submit">Login</button>
         </form>
-        import { Link } from "react-router-dom";
 
-<p>
-  Don’t have an account? <Link to="/signup">Signup</Link>
-</p>
-
+        <p>
+          Don’t have an account? <Link to="/signup">Signup</Link>
+        </p>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Login;
