@@ -62,22 +62,40 @@ const BackToTopBtn = ({
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 group">
+    <div 
+      className="group"
+      style={{
+        position: 'fixed',
+        bottom: '24px',
+        right: '24px',
+        zIndex: 9999
+      }}
+    >
       <button
         onClick={scrollToTop}
         onKeyDown={handleKeyDown}
         className={`
-          flex items-center justify-center p-3 rounded-full 
+          p-3 rounded-full 
           bg-blue-600 text-white shadow-lg 
           transition-all duration-300 ease-out
           transform hover:scale-110 hover:bg-blue-700 
-          hover:shadow-blue-500/50 hover:shadow-xl
+          hover:shadow-xl
           focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2
           active:scale-95
-          animate-in fade-in slide-in-from-bottom-4 duration-300
           ${isAnimating ? 'animate-pulse' : ''}
           ${className}
         `}
+        style={{
+          width: '48px',
+          height: '48px',
+          borderRadius: '50%',
+          border: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          fontSize: '18px'
+        }}
         aria-label="Scroll back to top of page"
         title={showTooltip ? "Back to top" : undefined}
       >
@@ -85,17 +103,29 @@ const BackToTopBtn = ({
       </button>
       
       {showTooltip && (
-        <div className="
-          absolute bottom-full right-0 mb-2 px-2 py-1 
-          bg-gray-900 text-white text-sm rounded 
-          opacity-0 group-hover:opacity-100 
-          transition-opacity duration-200
-          pointer-events-none whitespace-nowrap
-        ">
+        <div 
+          style={{
+            position: 'absolute',
+            bottom: '60px',
+            right: '0',
+            fontSize: '12px',
+            backgroundColor: '#1f2937',
+            color: '#ffffff',
+            borderRadius: '4px',
+            padding: '6px 10px',
+            opacity: 0,
+            transition: 'opacity 0.2s ease',
+            pointerEvents: 'none',
+            whiteSpace: 'nowrap',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+          }}
+          className="group-hover:opacity-100"
+        >
           Back to top
         </div>
       )}
-    </div>);
+    </div>
+  );
 };
 
 export default BackToTopBtn;
