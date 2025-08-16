@@ -7,6 +7,7 @@ The **Stock Analyzer** project is a complete stock market analysis tool utilizin
 <img alt="Stars" src="https://img.shields.io/github/stars/SrigadaAkshayKumar/stock?style=flat&logo=github"/>
 <img alt="Forks" src="https://img.shields.io/github/forks/SrigadaAkshayKumar/stock?style=flat&logo=github"/>
 <img alt="Issues" src="https://img.shields.io/github/issues/SrigadaAkshayKumar/stock?style=flat&logo=github"/>
+<img alt="Issues Closed" src="https://img.shields.io/github/issues-closed/SrigadaAkshayKumar/stock?style=flat&logo=github"/>
 <img alt="Open Pull Requests" src="https://img.shields.io/github/issues-pr/SrigadaAkshayKumar/stock?style=flat&logo=github"/>
 <img alt="Close Pull Requests" src="https://img.shields.io/github/issues-pr-closed/SrigadaAkshayKumar/stock?style=flat&color=green&logo=github"/>
 </div>
