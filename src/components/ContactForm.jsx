@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BackToTopBtn from "../components/BackToTopBtn";
+import BackToTopBtn from "./BackToTopBtn";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({

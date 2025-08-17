@@ -5,7 +5,7 @@ import { FaLock, FaUsers, FaEnvelope } from "react-icons/fa";
 import { FiRefreshCcw } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import '../App.css';
-import BackToTopBtn from "../components/BackToTopBtn";
+import BackToTopBtn from "./BackToTopBtn";
 const AboutComponent = () => {
     return(
         <>

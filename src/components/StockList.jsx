@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toggleWatchlist } from '../utils/watchlistManager';
 import { auth, db, database } from "../components/firebase";
 import stockData from "./data/stockData.json";
-import BackToTopBtn from "../components/BackToTopBtn";
+import BackToTopBtn from "./BackToTopBtn";
 
 const StocksList = () => {
   const [stocks, setStocks] = useState([]);
