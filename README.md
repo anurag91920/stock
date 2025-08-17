@@ -49,17 +49,25 @@ The **Stock Analyzer** project is a complete stock market analysis tool utilizin
 ```
 Directory structure:
 └── srigadaakshaykumar-stock/
+    ├── LICENSE
     ├── README.md
     ├── SETUP.md
     ├── CONTRIBUTION.md
+    ├── CODE_OF_CONDUCT.md
+    ├── SECURITY.md
+    ├── package-lock.json
     ├── package.json
     ├── static.json
     ├── backend/
+        ├──app/
+        ├──data/
     │   ├── app.py
+    |   ├── generate_csvs.py
     │   ├── requirements.txt
     │   ├── stock-prediction.ipynb
     │   └── tf.keras
     ├── public/
+    |   ├── icon.png
     │   ├── index.html
     │   ├── manifest.json
     │   └── robots.txt
@@ -72,14 +80,22 @@ Directory structure:
         ├── reportWebVitals.js
         ├── setupTests.js
         └── components/
-            ├── AuthContext.js
+            ├── About.jsx
+            ├── AuthContext.jsx
+            ├── BackToTopBtn.jsx
+            ├── ContactForm.jsx
             ├── firebase.js
+            ├── Footer.css
             ├── Footer.jsx
             ├── Header.jsx
+            ├── Login.css
             ├── Login.js
             ├── Prediction.jsx
-            ├── Signup.js
+            ├── SentimentChart.jsx
+            ├── SignUp.css
+            ├── Signup.jsx
             ├── Stockdata.jsx
+            ├── StockMetricCard.jsx
             ├── StockList.jsx
             └── data/
                 └── stockData.json

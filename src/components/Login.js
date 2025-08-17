@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../components/firebase";
 import { useNavigate, Link } from "react-router-dom";
 import { syncLocalToFirebase } from "../utils/watchlistManager";
+import "./Login.css"; // External CSS
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,46 +12,53 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-  e.preventDefault();
-  setError("");
+    e.preventDefault();
+    setError("");
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    
-   
-    await syncLocalToFirebase(); 
+    try {
+      // Firebase authentication
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    alert("Login successful!");
-    navigate("/");
-  } catch (err) {
-    setError("Invalid email or password");
-  }
-};
+      // Sync local data to Firebase after login
+      await syncLocalToFirebase(userCredential.user);
+
+      navigate("/"); // redirect to home page
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   return (
-    <div className="auth-container">
-      <h2>Login</h2>
-      <form onSubmit={handleLogin} className="auth-form">
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        {error && <p className="auth-error">{error}</p>}
-        <button type="submit">Login</button>
-      </form>
-      <p>
-        Don’t have an account? <Link to="/signup">Signup</Link>
-      </p>
+    <div className="login-page">
+      <div className="login-container">
+        <h2>Login</h2>
+        <form onSubmit={handleLogin} className="login-form">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          {error && <p className="login-error">{error}</p>}
+          <button type="submit">Login</button>
+        </form>
+
+        <p>
+          Don’t have an account? <Link to="/signup">Signup</Link>
+        </p>
+      </div>
     </div>
   );
 };
