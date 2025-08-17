@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import BackToTopBtn from "../components/BackToTopBtn";
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -191,6 +191,7 @@ const ContactForm = () => {
           {status}
         </p>
       )}
+      <BackToTopBtn />
     </div>
   );
 };

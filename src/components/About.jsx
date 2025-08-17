@@ -5,8 +5,10 @@ import { FaLock, FaUsers, FaEnvelope } from "react-icons/fa";
 import { FiRefreshCcw } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import '../App.css';
+import BackToTopBtn from "../components/BackToTopBtn";
 const AboutComponent = () => {
     return(
+        <>
         <div className="">
             <h1> About Us </h1>
             <h3>Welcome to our AI Stock Analyzer</h3>
@@ -60,6 +62,9 @@ const AboutComponent = () => {
             <br></br>
             <br></br>
         </div>
+            <BackToTopBtn/>
+        </>
+
     );
 }
 export default AboutComponent;
