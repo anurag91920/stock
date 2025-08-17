@@ -21,7 +21,16 @@ const App = () => {
           <Header />
           <div className="content">
             <Routes>
-              <Route path="/" element={<><StocksList /><AboutComponent /><ContactForm /></>} />
+              <Route
+                path="/"
+                element={
+                  <>
+                    <StocksList />
+                    <AboutComponent />
+                    <ContactForm />
+                  </>
+                }
+              />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/stock/:ticker" element={<Stockdata />} />
@@ -31,11 +40,11 @@ const App = () => {
               <Route path="/contact" element={<ContactForm />} />
             </Routes>
           </div>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
   );
 };
-
 
 export default App;

@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, database } from "./firebase";
 import { ref, set } from "firebase/database";
 import { Link, useNavigate } from "react-router-dom";
-import "./Signup.css"; 
+import "./Signup.css";
 console.log("Login component rendered");
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -52,15 +52,12 @@ const Signup = () => {
           {error && <p className="login-error">{error}</p>}
           <button type="submit">Signup</button>
         </form>
-        import { Link } from "react-router-dom";
-
-<p>
-  Already have an account? <Link to="/login">Login</Link>
-</p>
-
+        <p>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default Signup;
