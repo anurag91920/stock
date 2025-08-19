@@ -52,7 +52,6 @@ const Signup = () => {
           {error && <p className="login-error">{error}</p>}
           <button type="submit">Signup</button>
         </form>
-
         <p>
           Already have an account? <Link to="/login">Login</Link>
         </p>
