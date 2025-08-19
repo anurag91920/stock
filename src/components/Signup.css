@@ -4,80 +4,93 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-image: url("/Images/bg.png"); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  min-height: 100vh;
+  background: var(--color-bg);
   padding: 20px;
 }
 
-
 .login-container {
-  background-color: #ffffff;
+  background: var(--color-bg-secondary);
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--color-border);
   width: 100%;
-  max-width: 400px;
-  box-sizing: border-box;
+  max-width: 450px;
+  color: var(--color-text);
+  transition: all 0.3s ease;
   text-align: center;
 }
 
 .login-container h2 {
   margin-bottom: 25px;
-  color: #333;
+  color: var(--color-text);
+  font-size: 1.8rem;
 }
 
 .login-form input {
   width: 100%;
   padding: 12px 15px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 16px;
-  transition: border 0.3s ease;
+  color: var(--color-text);
+  transition: all 0.3s ease;
 }
 
 .login-form input:focus {
-  border-color: #007bff;
+  border-color: var(--color-primary);
   outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
 }
 
 .login-error {
-  color: #ff4d4d;
-  margin-top: 5px;
+  color: var(--color-error);
+  margin: 10px 0;
   font-size: 14px;
+  background: rgba(255, 0, 0, 0.1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 3px solid var(--color-error);
+  text-align: left;
 }
 
 .login-form button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-top: 15px;
-  background-color: #007bff;
-  border: none;
+  background: var(--color-primary);
   color: white;
-  font-size: 16px;
+  border: none;
   border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .login-form button:hover {
-  background-color: #0056b3;
+  background: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .login-container p {
   margin-top: 20px;
   font-size: 14px;
+  color: var(--color-text-secondary);
 }
 
 .login-container a {
-  color: #007bff;
+  color: var(--color-primary);
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .login-container a:hover {
-  text-decoration: underline;
+  color: var(--color-primary-hover);
+  text-decoration: underline;
 }
