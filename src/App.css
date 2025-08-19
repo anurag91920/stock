@@ -62,18 +62,20 @@ body {
 }
 
 .grid-item {
-  background: var(--color-card-bg);
+  background: var(--color-bg-secondary);
   border-radius: 10px;
   padding: 2rem;
-  box-shadow: 0 4px 6px var(--color-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
   text-align: center;
   border: 1px solid var(--color-border);
+  color: var(--color-text);
 }
 
 .grid-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px var(--color-shadow);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+  background: var(--color-bg-tertiary);
 }
 
 .grid-item h2 {
@@ -1258,18 +1260,21 @@ strong {
   padding: 20px;
 }
 .grid-item {
-  background: #fff;
+  background: var(--color-bg-secondary);
   padding: 20px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
   cursor: pointer;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
 
 .grid-item:hover {
-  transform: translateY(-10px); /* slight lift */
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* deeper shadow */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+  background: var(--color-bg-tertiary);
 }
 
 /*======================================*/
