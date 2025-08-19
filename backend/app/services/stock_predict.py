@@ -13,7 +13,7 @@ from flask import jsonify
 import pandas as pd
 import os
 
-DATA_FOLDER = os.path.join('backend', 'data')
+DATA_FOLDER = 'data'
 
 def predict_stock_handler(request):
     """
@@ -38,9 +38,13 @@ def predict_stock_handler(request):
         if not os.path.exists(file_path):
             return jsonify({'error': f'CSV data not found for the ticker symbol: {ticker}'}), 404
 
-        data = pd.read_csv(file_path)
-        if data.empty or 'Date' not in data.columns or 'Close' not in data.columns:
-            return jsonify({'error': 'Invalid or empty CSV file - missing required columns'}), 400
+        # Skip the first 3 rows which contain metadata and set proper column names
+        data = pd.read_csv(file_path, skiprows=3, header=None)
+        if data.empty or len(data.columns) < 6:
+            return jsonify({'error': 'Invalid or empty CSV file - insufficient columns'}), 400
+        
+        # Set proper column names based on the CSV structure
+        data.columns = ['Date', 'Close', 'High', 'Low', 'Open', 'Volume']
 
         # Convert 'Date' to datetime
         data['Date'] = pd.to_datetime(data['Date'])
