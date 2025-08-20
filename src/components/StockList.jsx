@@ -60,6 +60,7 @@ const StocksList = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
+      
       {/* 🚀 Hero Section */}
       <section className={styles.hero}>
         <h1>Welcome to Stock Analyzer!</h1>

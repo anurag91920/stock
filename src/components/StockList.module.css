@@ -218,7 +218,7 @@ tr:hover {
   }
 }
 
-/* 🚀 Hero Section */
+/* Hero Section */
 .hero {
   text-align: center;
   padding: 3rem 1rem;
@@ -237,7 +237,7 @@ tr:hover {
   opacity: 0.9;
 }
 
-/* 📊 Cards Layout */
+/* Cards Layout */
 .cardsContainer {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -261,7 +261,7 @@ tr:hover {
   margin-bottom: 1rem;
 }
 
-/* 🔥 Watchlist Button */
+/* Watchlist Button */
 .watchlistButton {
   margin-top: 1rem;
   background-color: #ff5722;
