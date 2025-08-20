@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import BackToTopBtn from "./BackToTopBtn";
+import styles from "./ContactForm.module.css";
+import { FaUser, FaEnvelope, FaComment, FaPaperPlane, FaCheck, FaTimes } from 'react-icons/fa';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,7 @@ const ContactForm = () => {
   const [status, setStatus] = useState("");
   const [errors, setErrors] = useState({});
   const [showOverlay, setShowOverlay] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Regex patterns
   const nameRegex = /^[a-zA-Z\s]*$/;
@@ -54,7 +57,9 @@ const ContactForm = () => {
       return;
     }
 
+    setIsSubmitting(true);
     setStatus("Sending message...");
+
     const payload = {
       access_key: process.env.REACT_APP_ACCESS_KEY,
       ...formData,
@@ -68,229 +73,185 @@ const ContactForm = () => {
       });
 
       const result = await res.json();
+
       if (result.success) {
         setStatus("Message sent successfully!");
         setFormData({ firstName: "", lastName: "", email: "", message: "" });
         setErrors({});
         setShowOverlay(true);
-
-        setTimeout(() => setShowOverlay(false), 3000);
+        setTimeout(() => setShowOverlay(false), 5000); // auto hide
       } else {
-        setStatus("Failed to send message.");
+        setStatus("Failed to send message. Please try again later.");
       }
     } catch (error) {
       console.error("Error:", error);
-      setStatus("An error occurred. Please try again.");
+      setStatus("An error occurred. Please check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const errorTextStyle = {
-    color: "red",
-    fontSize: "12px",
-    marginTop: "4px",
-    display: "block",
-  };
-
   return (
-    <section
-      className="contact-section"
-      id="contact"
-      style={{ padding: "80px 0", color: "white", backgroundColor: "white" }}
-    >
-      <div
-        className="container contact-container"
-        style={{
-          maxWidth: "1000px",
-          margin: "0 auto",
-          background: "rgba(0, 123, 255, 0.15)",
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
-          borderRadius: "30px",
-          border: "1px solid rgba(255, 255, 255, 0.3)",
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
-          padding: "30px",
-        }}
-      >
-        <h2
-          className="section-title"
-          style={{
-            fontSize: "3rem",
-            textAlign: "center",
-            marginBottom: "50px",
-            fontWeight: "bold",
-          }}
-        >
-          Contact Us
-        </h2>
+    <div className={styles.pageContainer}>
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h2 className={styles.sectionTitle}>Contact Us</h2>
+        </div>
 
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: "flex", flexDirection: "column", gap: "25px" }}
-        >
-          {/* First + Last Name */}
-          <div className="flex-contact">
-            <div className="fullname" style={{ position: "relative" }}>
-              <i
-                className="fas fa-user fas-animation"
-                style={{
-                  position: "absolute",
-                  top: "16px",
-                  left: "16px",
-                  color: "#ccc",
-                  fontSize: "1.4rem",
-                }}
-              ></i>
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={handleChange}
-                required
-                className="contact-input"
-                style={{
-                  padding: "18px 18px 18px 50px",
-                  fontSize: "1.2rem",
-                  width: "100%",
-                  border: "none",
-                  borderRadius: "15px",
-                }}
-              />
+        <form onSubmit={handleSubmit} className={styles.contactForm}>
+          <div className={styles.flexContact}>
+            <div className={styles.formGroup}>
+              <label htmlFor="firstName" className={styles.label}>
+                First Name
+              </label>
+              <div className={styles.inputWrapper}>
+                <FaUser className={styles.icon} />
+                <input
+                  id="firstName"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  className={`${styles.input} ${errors.firstName ? styles.errorInput : ''}`}
+                  placeholder="Enter your first name"
+                  required
+                  aria-required="true"
+                  aria-invalid={!!errors.firstName}
+                  aria-describedby={errors.firstName ? "firstname-error" : undefined}
+                />
+              </div>
               {errors.firstName && (
-                <span style={errorTextStyle}>{errors.firstName}</span>
+                <span id="firstname-error" className={styles.error}>
+                  {errors.firstName}
+                </span>
               )}
             </div>
 
-            <div className="fullname" style={{ position: "relative" }}>
-              <i
-                className="fas fa-id-card fas-animation"
-                style={{
-                  position: "absolute",
-                  top: "16px",
-                  left: "16px",
-                  color: "#ccc",
-                  fontSize: "1.4rem",
-                }}
-              ></i>
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Last Name"
-                value={formData.lastName}
-                onChange={handleChange}
-                required
-                className="contact-input"
-                style={{
-                  padding: "18px 18px 18px 50px",
-                  fontSize: "1.2rem",
-                  width: "100%",
-                  border: "none",
-                  borderRadius: "15px",
-                }}
-              />
+            <div className={styles.formGroup}>
+              <label htmlFor="lastName" className={styles.label}>
+                Last Name
+              </label>
+              <div className={styles.inputWrapper}>
+                <FaUser className={styles.icon} />
+                <input
+                  id="lastName"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  className={`${styles.input} ${errors.lastName ? styles.errorInput : ''}`}
+                  placeholder="Enter your last name"
+                  required
+                  aria-required="true"
+                  aria-invalid={!!errors.lastName}
+                  aria-describedby={errors.lastName ? "lastname-error" : undefined}
+                />
+              </div>
               {errors.lastName && (
-                <span style={errorTextStyle}>{errors.lastName}</span>
+                <span id="lastname-error" className={styles.error}>
+                  {errors.lastName}
+                </span>
               )}
             </div>
           </div>
 
-          {/* Email */}
-          <div style={{ position: "relative" }}>
-            <i
-              className="fas fa-envelope fas-animation"
-              style={{
-                position: "absolute",
-                top: "16px",
-                left: "16px",
-                color: "#ccc",
-                fontSize: "1.4rem",
-              }}
-            ></i>
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="contact-input"
-              style={{
-                padding: "18px 18px 18px 50px",
-                fontSize: "1.2rem",
-                width: "100%",
-                border: "none",
-                borderRadius: "15px",
-              }}
-            />
+          <div className={styles.formGroup}>
+            <label htmlFor="email" className={styles.label}>
+              Email Address
+            </label>
+            <div className={styles.inputWrapper}>
+              <FaEnvelope className={styles.icon} />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`${styles.input} ${errors.email ? styles.errorInput : ''}`}
+                placeholder="Enter your email address"
+                required
+                aria-required="true"
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? "email-error" : undefined}
+              />
+            </div>
             {errors.email && (
-              <span style={errorTextStyle}>{errors.email}</span>
+              <span id="email-error" className={styles.error}>
+                {errors.email}
+              </span>
             )}
           </div>
 
-          {/* Message */}
-          <div style={{ position: "relative" }}>
-            <i
-              className="fas fa-comment-dots fas-animation"
-              style={{
-                position: "absolute",
-                top: "16px",
-                left: "16px",
-                color: "#ccc",
-                fontSize: "1.4rem",
-              }}
-            ></i>
-            <textarea
-              name="message"
-              rows="6"
-              placeholder="Your Message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              className="contact-textarea"
-              style={{
-                padding: "18px 18px 18px 50px",
-                fontSize: "1.2rem",
-                width: "100%",
-                border: "none",
-                borderRadius: "15px",
-              }}
-            ></textarea>
+          <div className={styles.formGroup}>
+            <label htmlFor="message" className={styles.label}>
+              Message
+            </label>
+            <div className={styles.inputWrapper}>
+              <FaComment className={styles.icon} />
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                className={`${styles.textarea} ${errors.message ? styles.errorInput : ''}`}
+                placeholder="Enter your message"
+                required
+              />
+            </div>
+            {errors.message && (
+              <span id="message-error" className={styles.error}>
+                {errors.message}
+              </span>
+            )}
           </div>
 
-          {/* Submit */}
+          {status && (
+            <div 
+              className={`${styles.statusMessage} ${
+                status.includes('success') ? styles.statusSuccess : 
+                status.includes('error') || status.includes('Failed') ? styles.statusError : ''
+              }`}
+              role="status"
+              aria-live="polite"
+            >
+              {status}
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-3 px-4 rounded-lg font-bold text-lg hover:bg-green-600 transition-colors duration-300 shadow-md"
+            className={`${styles.button} ${isSubmitting ? styles.buttonLoading : ''}`}
+            disabled={isSubmitting}
           >
-            <i className="fas fa-paper-plane"></i> Send Message
+            {isSubmitting ? (
+              <>
+                <span className={styles.spinner}></span>
+                Sending...
+              </>
+            ) : (
+              <>
+                <FaPaperPlane className={styles.buttonIcon} />
+                Send Message
+              </>
+            )}
           </button>
         </form>
 
-        {/* Status */}
-        {status && (
-          <p
-            className={`mt-5 text-center font-bold ${
-              status.includes("successfully") ? "text-green-700" : "text-red-600"
-            }`}
-          >
-            {status}
-          </p>
-        )}
-
-        {/* Overlay */}
-        <div
-          className={`message-overlay ${showOverlay ? "opacity-100" : ""}`}
-          style={{ opacity: showOverlay ? 1 : 0 }}
-        >
-          <div className="overlay-content">
-            <i className="fas fa-check-circle"></i>
-            <span>Message Sent Successfully!</span>
+        {showOverlay && (
+          <div className={styles.successOverlay}>
+            <div className={styles.successIcon}>
+              <FaCheck className={styles.icon} style={{ fontSize: '3rem', color: 'var(--color-success)' }} />
+            </div>
+            <h3 className={styles.successTitle}>Thank You!</h3>
+            <p className={styles.successText}>
+              Your message has been sent successfully. We'll get back to you soon!
+            </p>
+            <button onClick={() => setShowOverlay(false)} className={styles.closeBtn}>
+              <FaTimes className={styles.icon} />
+              Close
+            </button>
           </div>
-        </div>
-
-        
+        )}
       </div>
-    </section>
+    </div>
   );
 };
 

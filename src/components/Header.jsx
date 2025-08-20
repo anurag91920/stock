@@ -1,16 +1,16 @@
-// src/components/Header.js
+// src/components/Header.jsx
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { signOut } from "firebase/auth";
-import { auth } from "../components/firebase";
+import { auth } from "./firebase";
 import { FaChartLine, FaBars, FaTimes } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
 import { SlSpeech } from "react-icons/sl";
 import { MdContactSupport } from "react-icons/md";
-import { CiBoxList } from "react-icons/ci";
-import { CiLogin } from "react-icons/ci";
-import { CiLogout } from "react-icons/ci";
+import { CiBoxList, CiLogin, CiLogout } from "react-icons/ci";
+import ThemeToggle from "./ThemeToggle";
+import "./Header.css";
 
 const Header = () => {
   const { user: currentUser } = useAuth();
@@ -45,54 +45,66 @@ const Header = () => {
         </div>
 
         <nav className={`nav-links ${isMenuOpen ? "nav-open" : ""}`}>
-          <NavLink to="/" className="nav-link" onClick={closeMenu}>
-            <div className="icons">
-              <IoHome />
-              <p>Home</p>
-            </div>
-          </NavLink>
-
-          {/* === ADDED LINKS START HERE === */}
-          <NavLink to="/about" className="nav-link" onClick={closeMenu}>
-            <div className="icons">
-              <SlSpeech /> <p>About</p>
-            </div>
-          </NavLink>
-          <NavLink to="/contact" className="nav-link" onClick={closeMenu}>
-            <div className="icons">
-              <MdContactSupport />
-              <p>Contact</p>
-            </div>
-          </NavLink>
-          <NavLink to="/watchlist" className="nav-link" onClick={closeMenu}>
-            <div className="icons">
-              <CiBoxList />
-              <p>My Watchlist</p>
-            </div>
-          </NavLink>
-
-          {/* === ADDED LINKS END HERE === */}
-
-          {currentUser ? (
-            <>
-              <span className="nav-link-welcome">
-                Hi, {getUsername(currentUser.email)}
-              </span>
-              <div className="icons">
-                <button onClick={handleLogout} className="nav-link-button">
-                  <CiLogout />
-                  Logout
-                </button>
-              </div>
-            </>
-          ) : (
-            <NavLink to="/login" className="nav-link" onClick={closeMenu}>
-              <div className="icons">
-                <CiLogin />
-                <p>Login</p>
+          <div className="nav-section">
+            <NavLink to="/" className="nav-link" onClick={closeMenu} end>
+              <div className="nav-icon">
+                <IoHome />
+                <span>Home</span>
               </div>
             </NavLink>
-          )}
+
+            <NavLink to="/about" className="nav-link" onClick={closeMenu}>
+              <div className="nav-icon">
+                <SlSpeech />
+                <span>About</span>
+              </div>
+            </NavLink>
+
+            <NavLink to="/contact" className="nav-link" onClick={closeMenu}>
+              <div className="nav-icon">
+                <MdContactSupport />
+                <span>Contact</span>
+              </div>
+            </NavLink>
+
+            <NavLink to="/watchlist" className="nav-link" onClick={closeMenu}>
+              <div className="nav-icon">
+                <CiBoxList />
+                <span>Watchlist</span>
+              </div>
+            </NavLink>
+          </div>
+
+          <div className="nav-actions">
+            <div className="theme-toggle-container">
+              <ThemeToggle />
+            </div>
+            
+            {currentUser ? (
+              <div className="user-section">
+                <span className="welcome-message">
+                  Hi, {getUsername(currentUser.email)}
+                </span>
+                <button 
+                  onClick={handleLogout} 
+                  className="logout-button"
+                  aria-label="Logout"
+                >
+                  <CiLogout className="logout-icon" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <NavLink 
+                to="/login" 
+                className="login-button"
+                onClick={closeMenu}
+              >
+                <CiLogin className="login-icon" />
+                <span>Login</span>
+              </NavLink>
+            )}
+          </div>
         </nav>
       </div>
     </header>
