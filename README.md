@@ -40,7 +40,6 @@ The **Stock Analyzer** project is a complete stock market analysis tool utilizin
 - **Flask:** Backend Framework
 - **yfinance:** Stock data extraction
 - **Pandas:** Data manipulation
-- **Scikit-learn:** to load and use the model
 
 ---
 
