@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { motion, AnimatePresence } from "framer-motion";
 import { toggleWatchlist } from '../utils/watchlistManager';
-import { auth, db, database } from "../components/firebase";
+import { auth } from "../components/firebase";
 import stockData from "./data/stockData.json";
 import BackToTopBtn from "../components/BackToTopBtn";
+import styles from "./StockList.module.css";
 
 const StocksList = () => {
   const [stocks, setStocks] = useState([]);
@@ -27,32 +28,31 @@ const StocksList = () => {
       navigate(`/stock/${searchTicker.trim()}`);
     }
   };
- const handleAddToWatchlist = async (stock) => {
-  const user = auth.currentUser;
 
-  if (user) {
-    try {
-      await toggleWatchlist(stock); 
-      alert(`${stock.symbol} added to your Firebase watchlist!`);
-    } catch (err) {
-      alert("Failed to add to watchlist.");
-      console.error(err);
+  const handleAddToWatchlist = async (stock) => {
+    const user = auth.currentUser;
+
+    if (user) {
+      try {
+        await toggleWatchlist(stock); 
+        alert(`${stock.symbol} added to your Firebase watchlist!`);
+      } catch (err) {
+        alert("Failed to add to watchlist.");
+        console.error(err);
+      }
+    } else {
+      const stored = JSON.parse(localStorage.getItem("watchlist")) || [];
+
+      if (stored.some((item) => item.symbol === stock.symbol)) {
+        alert("Stock is already in your guest watchlist!");
+        return;
+      }
+
+      const updated = [...stored, stock];
+      localStorage.setItem("watchlist", JSON.stringify(updated));
+      alert(`${stock.symbol} added to guest watchlist!`);
     }
-  } else {
-    const stored = JSON.parse(localStorage.getItem("watchlist")) || [];
-
-    if (stored.some((item) => item.symbol === stock.symbol)) {
-      alert("Stock is already in your guest watchlist!");
-      return;
-    }
-
-    const updated = [...stored, stock];
-    localStorage.setItem("watchlist", JSON.stringify(updated));
-    alert(`${stock.symbol} added to guest watchlist!`);
-  }
-};
-
-
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -76,26 +76,17 @@ const StocksList = () => {
   };
 
   const tableRowVariants = {
-    hidden: { x: -50, opacity: 0 },
+    hidden: { x: -20, opacity: 0 },
     visible: {
       x: 0,
       opacity: 1,
       transition: { duration: 0.3 }
-    },
-    hover: {
-      scale: 1.02,
-      backgroundColor: "#e3f2fd",
-      transition: { duration: 0.2 }
     }
   };
- 
-
-
-
 
   return (
     <motion.div 
-      className="stocks-list"
+      className={styles.stocksList}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -105,35 +96,35 @@ const StocksList = () => {
       </motion.h1>
 
       {/* Search Bar */}
-      <motion.div variants={itemVariants}>
+      <motion.div className={styles.searchContainer} variants={itemVariants}>
         <motion.input
           type="text"
           placeholder="Enter stock ticker"
           value={searchTicker}
           onChange={(e) => setSearchTicker(e.target.value)}
-          whileFocus={{ scale: 1.05 }}
+          whileFocus={{ scale: 1.01 }}
           transition={{ duration: 0.2 }}
+          className={styles.searchInput}
         />
         <motion.button 
           onClick={handleSearch}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className={styles.searchButton}
         >
           Search
         </motion.button>
       </motion.div>
 
       {/* Exchange Buttons */}
-      <motion.div className="exchange-buttons" variants={itemVariants}>
+      <motion.div className={styles.exchangeButtons} variants={itemVariants}>
         {["BSE", "NSE"].map((exchangeName) => (
           <motion.button
             key={exchangeName}
             onClick={() => setExchange(exchangeName)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            animate={{
-              backgroundColor: exchange === exchangeName ? "#0056b3" : "#007bff"
-            }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className={`${styles.exchangeButton} ${exchange === exchangeName ? styles.activeExchange : ''}`}
           >
             {exchangeName}
           </motion.button>
@@ -144,18 +135,18 @@ const StocksList = () => {
         {isLoading ? (
           <motion.div 
             key="loading"
-            className="loading-spinner"
+            className={styles.loadingSpinner}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.3 }}
           >
-            <ClipLoader color="#36d7b7" size={50} />
+            <ClipLoader color="var(--color-primary)" size={50} />
             <motion.p
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              please wait while Loading...
+              Please wait while loading...
             </motion.p>
             <motion.p
               animate={{ opacity: [0.5, 1, 0.5] }}
@@ -167,59 +158,53 @@ const StocksList = () => {
         ) : (
           <motion.div 
             key="table"
-            className="table-container"
+            className={styles.tableContainer}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
             <table>
               <thead>
-  <tr>
-    <th>Symbol</th>
-    <th>Name</th>
-    <th>Actions</th> {/* New column */}
-  </tr>
-</thead>
-
-             <tbody>
-  <AnimatePresence>
-    {stocks.map((stock, index) => (
-      <motion.tr
-        key={`${stock.symbol}-${index}`}
-        variants={tableRowVariants}
-        initial="hidden"
-        animate="visible"
-        whileHover="hover"
-        style={{ cursor: "pointer" }}
-        onClick={() => navigate(`/stock/${stock.symbol}`)}
-        custom={index}
-        transition={{ delay: index * 0.05 }}
-      >
-        <td>{stock.symbol}</td>
-        <td>{stock.name}</td>
-        <td>
-          <button
-            onClick={(e) => {
-              e.stopPropagation(); 
-              handleAddToWatchlist(stock);
-            }}
-            style={{
-              padding: "4px 10px",
-              backgroundColor: "#007bff",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer"
-            }}
-          >
-            Add to Watchlist
-          </button>
-        </td>
-      </motion.tr>
-    ))}
-  </AnimatePresence>
-</tbody>
-
+                <tr>
+                  <th>Symbol</th>
+                  <th>Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <AnimatePresence>
+                  {stocks.map((stock, index) => (
+                    <motion.tr
+                      key={`${stock.symbol}-${index}`}
+                      variants={tableRowVariants}
+                      initial="hidden"
+                      animate="visible"
+                      whileHover={{ backgroundColor: 'var(--color-card-hover)' }}
+                      custom={index}
+                      transition={{ delay: index * 0.05 }}
+                      className={styles.tableRow}
+                    >
+                      <td onClick={() => navigate(`/stock/${stock.symbol}`)} style={{ cursor: 'pointer' }}>
+                        {stock.symbol}
+                      </td>
+                      <td onClick={() => navigate(`/stock/${stock.symbol}`)} style={{ cursor: 'pointer' }}>
+                        {stock.name}
+                      </td>
+                      <td>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToWatchlist(stock);
+                          }}
+                          className={styles.actionButton}
+                        >
+                          + Watchlist
+                        </button>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </AnimatePresence>
+              </tbody>
             </table>
           </motion.div>
         )}
