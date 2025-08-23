@@ -47,7 +47,7 @@ function Stockdata() {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/stock?ticker=${ticker}&chart_period=${chartPeriod}&table_period=${tablePeriod}`
+        `http://x.x.x.x:10000/api/stock?ticker=${ticker}&chart_period=${chartPeriod}&table_period=${tablePeriod}`
       );
 
       setStockData(res.data.stock_data);
