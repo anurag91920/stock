@@ -31,7 +31,6 @@ const StocksList = () => {
 
   const handleAddToWatchlist = async (stock) => {
     const user = auth.currentUser;
-
     if (user) {
       try {
         await toggleWatchlist(stock);
@@ -41,16 +40,9 @@ const StocksList = () => {
         console.error(err);
       }
     } else {
-      const stored = JSON.parse(localStorage.getItem("watchlist")) || [];
-
-      if (stored.some((item) => item.symbol === stock.symbol)) {
-        alert("Stock is already in your guest watchlist!");
-        return;
-      }
-
-      const updated = [...stored, stock];
-      localStorage.setItem("watchlist", JSON.stringify(updated));
-      alert(`${stock.symbol} added to guest watchlist!`);
+      navigate("/login", {
+        state: { message: "Please log in to use the watchlist." },
+      });
     }
   };
 
@@ -60,7 +52,6 @@ const StocksList = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      
       {/* 🚀 Hero Section */}
       <section className={styles.hero}>
         <h1>Welcome to Stock Analyzer!</h1>
@@ -113,9 +104,7 @@ const StocksList = () => {
                 transition={{ duration: 0.3 }}
                 onClick={() => navigate(`/stock/${stock.symbol}`)}
               >
-                <div className={styles.stockIcon}>
-                  📈
-                </div>
+                <div className={styles.stockIcon}>📈</div>
                 <h3>{stock.symbol}</h3>
                 <p>{stock.name}</p>
                 <button
