@@ -58,7 +58,7 @@ const Header = () => {
           </div>
 
           <div className="nav-actions">
-            <ThemeToggle />
+            <ThemeToggle className='toggle-theme' />
             {currentUser ? (
               <div className="user-section">
                 <span className="welcome-message">Hi, {getUsername(currentUser.email)}</span>
