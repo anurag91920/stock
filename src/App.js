@@ -27,7 +27,6 @@ import { AuthProvider } from "./components/AuthContext";
 // Theme
 import { ThemeProvider, useTheme } from "./components/ThemeContext";
 
-
 // PrivateRoute for protecting watchlist
 function PrivateRoute({ children }) {
   const [user, loading] = useAuthState(auth);
