@@ -10,6 +10,11 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "https://aistockanalyzer.onrender.com"]}})
 
+# Home route:
+@app.route('/')
+def home():
+    return "Welcome to the Stock Analysis API"
+
 # Register blueprint
 app.register_blueprint(stock_routes, url_prefix="/api")
 
