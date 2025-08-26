@@ -6,6 +6,35 @@ import { Link } from "react-router-dom";
 import "../App.css";
 import BackToTopBtn from "../components/BackToTopBtn";
 
+// team member details
+// this is a random data
+const teamMembers = [
+  {
+    name: 'Jane Doe',
+    role: 'Founder & CEO',
+    image: 'https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D',
+    bio: 'Visionary leader with a passion for democratizing financial intelligence.'
+  },
+  {
+    name: 'John Smith',
+    role: 'Chief Technology Officer',
+    image: 'https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D',
+    bio: 'Expert in scalable systems and AI for finance.'
+  },
+  {
+    name: 'Lisa Ray',
+    role: 'Head of Data Science',
+    image: 'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
+    bio: 'Drives data-driven decision making using machine learning.'
+  },
+  {
+    name: 'Mark Lee',
+    role: 'Product Manager',
+    image: 'https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D',
+    bio: 'Ensures the platform meets investor needs with intuitive UX.'
+  },
+];
+
 const AboutComponent = () => {
   const iconColor = "var(--color-primary)";
   const headingStyle = { color: "var(--color-primary)" };
@@ -25,8 +54,27 @@ const AboutComponent = () => {
           designed to help you make informed decisions and manage your
           investments effectively.
         </p>
-
-        <div className="grid-container">
+        
+        {/* mission & vision  */}
+         <div className="mission-vision">
+          <div className="mission">
+            <h2 style={headingStyle}>Our Mission</h2>
+            <p>
+              To deliver reliable and data-driven stock analysis through innovative tools and insights, we are committed to empowering investors, learners and financial professionals with transparent , accurate and user-friendly solutions that support smarter investment decisions.
+            </p>
+          </div>
+          <div className="vision">
+            <h2 style={headingStyle}>Our Vision</h2>
+            <p>
+              To be recognized as a leading global platform for stock market analysis - where innovation, trust, and accessibility come together to help evry individual and organization achieve long-term financial success.
+            </p>
+          </div>
+        </div>
+         
+         {/* what we offer  */}
+        <div>
+          <h2 style={headingStyle}>What we offer</h2>
+          <div className="grid-container">
           <div className="grid-item">
             <FaChartLine size={40} color={iconColor} />
             <h2 style={headingStyle}>Real-Time Data</h2>
@@ -65,6 +113,33 @@ const AboutComponent = () => {
             <FaClock size={40} color={iconColor} />
             <h2 style={headingStyle}>24/7 Data Monitoring</h2>
             <p>Constant tracking for updated insights.</p>
+          </div>
+        </div>
+        </div>
+        
+        {/* why choose stock analyzer  */}
+        <div className="about-section why-choose">
+          <h2 style={headingStyle}>Why Choose Stock Analyzer?</h2>
+          <ul>
+            <li>✅ Trusted by over 500,000 users worldwide</li>
+            <li>✅ Backed by a team of expert analysts and engineers</li>
+            <li>✅ Secure, fast, and reliable platform</li>
+            <li>✅ Continuous innovation and feature updates</li>
+          </ul>
+        </div>
+
+        {/* team details  */}
+        <div className="team-section">
+          <h2 style={headingStyle}>Meet the Team</h2>
+          <div className="team-grid">
+            {teamMembers.map((member, index) => (
+              <div className="team-card" key={index}>
+                <img src={member.image} alt={`${member.name}`} />
+                <h3>{member.name}</h3>
+                <p className="role">{member.role}</p>
+                <p className="bio">{member.bio}</p>
+              </div>
+            ))}
           </div>
         </div>
 

@@ -48,7 +48,7 @@ function Stockdata() {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/stock/${ticker}?chart_period=${chartPeriod}&table_period=${tablePeriod}`
+        `http://x.x.x.x:10000/api/stock/${ticker}?chart_period=${chartPeriod}&table_period=${tablePeriod}`
       );
 
       setStockData(res.data.stock_data);
@@ -123,7 +123,7 @@ function Stockdata() {
       className="container"
       variants={containerVariants}
       initial="hidden"
-      animate="visible"
+      animate="visible"   
     >
       <h1 variants={itemVariants}></h1>
       {isLoading ? (
