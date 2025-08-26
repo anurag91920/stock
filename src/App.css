@@ -374,6 +374,7 @@ body,
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 14px;
 }
 
 .footer-main {
@@ -818,8 +819,10 @@ table tr:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   width: 30%;
   min-width: 300px;
+  max-height: 900px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: slideInRight 0.6s ease-out;
+  overflow: scroll;
 }
 
 .stock-info:hover,
