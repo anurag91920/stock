@@ -1,5 +1,4 @@
-import { auth, database as db } from "../components/firebase";
-
+import { auth, firestoreDb } from "../components/firebase";
 import {
   collection,
   addDoc,
@@ -15,7 +14,7 @@ export const toggleWatchlist = async (stock) => {
 
   if (user) {
     const q = query(
-      collection(db, "watchlist"),
+      collection(firestoreDb, "watchlist"),
       where("uid", "==", user.uid),
       where("symbol", "==", stock.symbol)
     );
@@ -24,11 +23,11 @@ export const toggleWatchlist = async (stock) => {
     if (!snapshot.empty) {
       await Promise.all(
         snapshot.docs.map((docSnap) =>
-          deleteDoc(doc(db, "watchlist", docSnap.id))
+          deleteDoc(doc(firestoreDb, "watchlist", docSnap.id))
         )
       );
     } else {
-      await addDoc(collection(db, "watchlist"), {
+      await addDoc(collection(firestoreDb, "watchlist"), {
         uid: user.uid,
         symbol: stock.symbol,
         name: stock.name,
@@ -47,12 +46,11 @@ export const toggleWatchlist = async (stock) => {
   }
 };
 
-
 export const getWatchlistSymbols = async () => {
   const user = auth.currentUser;
 
   if (user) {
-    const q = query(collection(db, "watchlist"), where("uid", "==", user.uid));
+    const q = query(collection(firestoreDb, "watchlist"), where("uid", "==", user.uid));
     const snapshot = await getDocs(q);
     return snapshot.docs.map((doc) => doc.data().symbol);
   } else {
@@ -60,6 +58,7 @@ export const getWatchlistSymbols = async () => {
     return stored.map((stock) => stock.symbol);
   }
 };
+
 export const syncLocalToFirebase = async () => {
   const user = auth.currentUser;
 
@@ -68,7 +67,7 @@ export const syncLocalToFirebase = async () => {
   const localWatchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
   const q = query(
-    collection(db, "watchlist"),
+    collection(firestoreDb, "watchlist"),
     where("uid", "==", user.uid)
   );
   const snapshot = await getDocs(q);
@@ -79,13 +78,12 @@ export const syncLocalToFirebase = async () => {
   );
 
   for (const stock of newItems) {
-    await addDoc(collection(db, "watchlist"), {
+    await addDoc(collection(firestoreDb, "watchlist"), {
       uid: user.uid,
       symbol: stock.symbol,
       name: stock.name,
     });
   }
-
 
   localStorage.removeItem("watchlist");
 };
@@ -94,7 +92,7 @@ export const getWatchlist = async () => {
   const user = auth.currentUser;
 
   if (user) {
-    const q = query(collection(db, "watchlist"), where("uid", "==", user.uid));
+    const q = query(collection(firestoreDb, "watchlist"), where("uid", "==", user.uid));
     const snapshot = await getDocs(q);
     return snapshot.docs.map((doc) => doc.data());
   } else {
@@ -103,13 +101,12 @@ export const getWatchlist = async () => {
   }
 };
 
-
 export const removeStockFromWatchlist = async (symbol) => {
   const user = auth.currentUser;
 
   if (user) {
     const q = query(
-      collection(db, "watchlist"),
+      collection(firestoreDb, "watchlist"),
       where("uid", "==", user.uid),
       where("symbol", "==", symbol)
     );
@@ -117,7 +114,7 @@ export const removeStockFromWatchlist = async (symbol) => {
 
     await Promise.all(
       snapshot.docs.map((docSnap) =>
-        deleteDoc(doc(db, "watchlist", docSnap.id))
+        deleteDoc(doc(firestoreDb, "watchlist", docSnap.id))
       )
     );
   } else {
@@ -126,5 +123,3 @@ export const removeStockFromWatchlist = async (symbol) => {
     localStorage.setItem("watchlist", JSON.stringify(updated));
   }
 };
-
-

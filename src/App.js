@@ -1,4 +1,3 @@
-// App.js
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -16,6 +15,10 @@ import Signup from "./components/Signup";
 import Watchlist from "./components/Watchlist";
 import { AuthProvider } from "./components/AuthContext";
 
+// Toasts
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // Theme
 import { ThemeProvider, useTheme } from "./components/ThemeContext";
 
@@ -24,14 +27,10 @@ const GlobalStyles = () => {
   const { theme } = useTheme();
   
   useEffect(() => {
-    // Remove the no-js class if JavaScript is enabled
     document.documentElement.classList.remove('no-js');
     document.documentElement.classList.add('js');
-    
-    // Set theme class on body for easier targeting
     document.body.className = `theme-${theme}`;
     
-    // Add transition class after initial render
     const timer = setTimeout(() => {
       document.documentElement.classList.add('theme-transition-ready');
     }, 100);
@@ -52,14 +51,7 @@ const App = () => {
             <Header />
             <div className="content">
               <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      <StocksList />
-                    </>
-                  }
-                />
+                <Route path="/" element={<StocksList />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/stock/:ticker" element={<Stockdata />} />
@@ -70,6 +62,9 @@ const App = () => {
               </Routes>
             </div>
             <Footer />
+
+            {/* Toasts will show up from here */}
+            <ToastContainer position="top-right" autoClose={3000} />
           </div>
         </Router>
       </AuthProvider>

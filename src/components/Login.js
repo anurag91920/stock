@@ -1,122 +1,134 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-    signInWithEmailAndPassword,
-    signInWithPopup,
-    GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import { auth } from "../components/firebase";
 import { useNavigate, Link } from "react-router-dom";
 import { syncLocalToFirebase } from "../utils/watchlistManager";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../components/AuthContext";  // Auth context import करें
 import "./Login.css";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setError("");
-        setLoading(true);
+  const { user } = useAuth();     // Auth context से current user प्राप्त करें
+  const navigate = useNavigate();
 
-        try {
-            // Firebase authentication
-            const userCredential = await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
+  // अगर user login है तो home page पर redirect कर दें
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
-            // Sync local data to Firebase after login
-            await syncLocalToFirebase(userCredential.user);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-            navigate("/"); // redirect to home page
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    const handleGoogleLogin = async () => {
-        setError("");
-        setLoading(true);
+      // Local watchlist Firebase में sync करें
+      await syncLocalToFirebase(userCredential.user);
 
-        try {
-            const provider = new GoogleAuthProvider();
-            const result = await signInWithPopup(auth, provider);
+      toast.success("Login successful!");
+      // यहाँ navigate() का इंतजार नहीं, क्योंकि useEffect user के आधार पर redirect करेगा
+    } catch (err) {
+      setError("Invalid email or password");
+      console.error("Login error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            // Sync local data to Firebase after Google login
-            await syncLocalToFirebase(result.user);
+  const handleGoogleLogin = async () => {
+    setError("");
+    setLoading(true);
 
-            navigate("/"); // redirect to home page
-        } catch (err) {
-            const errorCode = err.code;
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
 
-            if (errorCode === "auth/popup-closed-by-user") {
-                setError("Sign-in cancelled by user");
-            } else if (errorCode === "auth/popup-blocked") {
-                setError(
-                    "Popup blocked by browser. Please allow popups and try again."
-                );
-            } else {
-                setError(err.message);
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
+      await syncLocalToFirebase(result.user);
 
-    return (
-        <div className="login-page">
-            <div className="login-container">
-                <h2>Login</h2>
+      toast.success("Login successful with Google!");
+      // Redirect useEffect में होगा
+    } catch (err) {
+      const errorCode = err.code;
 
-                {/* Google Sign-In Button */}
-                <button
-                    onClick={handleGoogleLogin}
-                    disabled={loading}
-                    className="google-login-btn"
-                    type="button"
-                >
-                    {loading ? "Signing in..." : "Sign in with Google"}
-                </button>
+      if (errorCode === "auth/popup-closed-by-user") {
+        setError("Sign-in cancelled by user");
+      } else if (errorCode === "auth/popup-blocked") {
+        setError("Popup blocked by browser. Please allow popups and try again.");
+      } else {
+        setError("An error occurred during login");
+        console.error("Google Login error:", err);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-                <div className="divider">
-                    <span>or</span>
-                </div>
+  return (
+    <div className="login-page">
+      <div className="login-container">
+        <h2>Login</h2>
 
-                <form onSubmit={handleLogin} className="login-form">
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        disabled={loading}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        disabled={loading}
-                    />
-                    {error && <p className="login-error">{error}</p>}
-                    <button type="submit" disabled={loading}>
-                        {loading ? "Logging in..." : "Login"}
-                    </button>
-                </form>
+        {/* Google Sign-In Button */}
+        <button
+          onClick={handleGoogleLogin}
+          disabled={loading}
+          className="google-login-btn"
+          type="button"
+        >
+          {loading ? "Signing in..." : "Sign in with Google"}
+        </button>
 
-                <p>
-                    Don't have an account? <Link to="/signup">Signup</Link>
-                </p>
-            </div>
+        <div className="divider">
+          <span>or</span>
         </div>
-    );
+
+        <form onSubmit={handleLogin} className="login-form">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={loading}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            disabled={loading}
+          />
+          {error && <p className="login-error">{error}</p>}
+          <button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        <p>
+          Don't have an account? <Link to="/signup">Signup</Link>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Login;
