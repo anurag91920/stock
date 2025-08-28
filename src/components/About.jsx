@@ -25,8 +25,27 @@ const AboutComponent = () => {
           designed to help you make informed decisions and manage your
           investments effectively.
         </p>
-
-        <div className="grid-container">
+        
+        {/* mission & vision  */}
+         <div className="mission-vision">
+          <div className="mission">
+            <h2 style={headingStyle}>Our Mission</h2>
+            <p>
+              To deliver reliable and data-driven stock analysis through innovative tools and insights, we are committed to empowering investors, learners and financial professionals with transparent , accurate and user-friendly solutions that support smarter investment decisions.
+            </p>
+          </div>
+          <div className="vision">
+            <h2 style={headingStyle}>Our Vision</h2>
+            <p>
+              To be recognized as a leading global platform for stock market analysis - where innovation, trust, and accessibility come together to help evry individual and organization achieve long-term financial success.
+            </p>
+          </div>
+        </div>
+         
+         {/* what we offer  */}
+        <div>
+          <h2 style={headingStyle}>What we offer</h2>
+          <div className="grid-container">
           <div className="grid-item">
             <FaChartLine size={40} color={iconColor} />
             <h2 style={headingStyle}>Real-Time Data</h2>
@@ -66,6 +85,18 @@ const AboutComponent = () => {
             <h2 style={headingStyle}>24/7 Data Monitoring</h2>
             <p>Constant tracking for updated insights.</p>
           </div>
+        </div>
+        </div>
+        
+        {/* why choose stock analyzer  */}
+        <div className="about-section why-choose">
+          <h2 style={headingStyle}>Why Choose Stock Analyzer?</h2>
+          <ul>
+            <li>✅ Trusted by over 500,000 users worldwide</li>
+            <li>✅ Backed by a team of expert analysts and engineers</li>
+            <li>✅ Secure, fast, and reliable platform</li>
+            <li>✅ Continuous innovation and feature updates</li>
+          </ul>
         </div>
 
         <div className="button-container">

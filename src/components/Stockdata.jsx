@@ -123,7 +123,7 @@ function Stockdata() {
       className="container"
       variants={containerVariants}
       initial="hidden"
-      animate="visible"
+      animate="visible"   
     >
       <h1 variants={itemVariants}></h1>
       {isLoading ? (
