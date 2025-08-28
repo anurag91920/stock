@@ -174,69 +174,6 @@ body {
   font-size: 1.05rem;
 }
 
-.team-section {
-  max-width: 1200px;
-  margin-top: 45px;
-}
-
-.team-section h2 {
-  color: #2c3e50;
-  margin-bottom: 2rem;
-}
-
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  justify-items: center;
-  pad: 5px;
-}
-
-.team-card {
-  background: var(--color-bg-secondary);
-  border-radius: 10px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-  text-align: center;
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
-}
-
-.team-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
-  background: var(--color-bg-tertiary);
-}
-
-.team-card img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%; 
-  object-fit: cover;
-  margin-bottom: 1rem;
-  border: 3px solid #2980b9;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.team-card h3 {
-  margin: 0.5rem 0;
-  font-size: 1.3rem;
-}
-
-.team-card .role {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.team-card .bio {
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
-
-
 /* --- ANIMATION KEYFRAMES --- */
 @keyframes fadeIn {
   from {
@@ -321,28 +258,11 @@ body {
   }
 }
 
-@media (max-width: 600px) {
-  .team-card {
-    padding: 1rem;
-  }
-
-  .team-card h3 {
-    font-size: 1.1rem;
-  }
-
-  .team-card .bio {
-    font-size: 0.9rem;
-  }
-}
-
 @media (max-width: 768px) {
   .mission-vision {
     flex-direction: column;
   }
 
-  .team-grid {
-    justify-content: center;
-  }
 }
 
 /* --- LOADING SPINNER WITH ANIMATIONS --- */

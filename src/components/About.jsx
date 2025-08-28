@@ -6,35 +6,6 @@ import { Link } from "react-router-dom";
 import "../App.css";
 import BackToTopBtn from "../components/BackToTopBtn";
 
-// team member details
-// this is a random data
-const teamMembers = [
-  {
-    name: 'Jane Doe',
-    role: 'Founder & CEO',
-    image: 'https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D',
-    bio: 'Visionary leader with a passion for democratizing financial intelligence.'
-  },
-  {
-    name: 'John Smith',
-    role: 'Chief Technology Officer',
-    image: 'https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D',
-    bio: 'Expert in scalable systems and AI for finance.'
-  },
-  {
-    name: 'Lisa Ray',
-    role: 'Head of Data Science',
-    image: 'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
-    bio: 'Drives data-driven decision making using machine learning.'
-  },
-  {
-    name: 'Mark Lee',
-    role: 'Product Manager',
-    image: 'https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D',
-    bio: 'Ensures the platform meets investor needs with intuitive UX.'
-  },
-];
-
 const AboutComponent = () => {
   const iconColor = "var(--color-primary)";
   const headingStyle = { color: "var(--color-primary)" };
@@ -126,21 +97,6 @@ const AboutComponent = () => {
             <li>✅ Secure, fast, and reliable platform</li>
             <li>✅ Continuous innovation and feature updates</li>
           </ul>
-        </div>
-
-        {/* team details  */}
-        <div className="team-section">
-          <h2 style={headingStyle}>Meet the Team</h2>
-          <div className="team-grid">
-            {teamMembers.map((member, index) => (
-              <div className="team-card" key={index}>
-                <img src={member.image} alt={`${member.name}`} />
-                <h3>{member.name}</h3>
-                <p className="role">{member.role}</p>
-                <p className="bio">{member.bio}</p>
-              </div>
-            ))}
-          </div>
         </div>
 
         <div className="button-container">
