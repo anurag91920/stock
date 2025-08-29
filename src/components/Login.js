@@ -5,9 +5,11 @@ import {
     GoogleAuthProvider,
 } from "firebase/auth";
 import { auth } from "../components/firebase";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { syncLocalToFirebase } from "../utils/watchlistManager";
 import "./Login.css";
+
+const provider = new GoogleAuthProvider();
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -16,23 +18,22 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(""); // Success message state
     const navigate = useNavigate();
+    const location = useLocation();
+    const loginMessage = location.state?.message;
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setError("");
         setSuccess("");
         setLoading(true);
-
         try {
-            // Firebase authentication
             const userCredential = await signInWithEmailAndPassword(
                 auth,
                 email,
                 password
             );
-
-            // Sync local data to Firebase after login
             await syncLocalToFirebase(userCredential.user);
+<<<<<<< HEAD
 
             setSuccess("Login successful! Redirecting...");
 
@@ -40,8 +41,11 @@ const Login = () => {
             setTimeout(() => {
                 navigate("/"); // redirect to home page
             }, 1500);
+=======
+            navigate("/"); // redirect to home
+>>>>>>> 6d4a9ebf2593ee6fb926ba6789c07bab650abc2b
         } catch (err) {
-            setError(err.message);
+            setError(err.message || "Failed to login. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -51,30 +55,26 @@ const Login = () => {
         setError("");
         setSuccess("");
         setLoading(true);
-
         try {
-            const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
-
-            // Sync local data to Firebase after Google login
             await syncLocalToFirebase(result.user);
+<<<<<<< HEAD
 
             setSuccess("Login successful! Redirecting...");
 
             setTimeout(() => {
                 navigate("/"); // redirect to home page
             }, 1500);
+=======
+            navigate("/");
+>>>>>>> 6d4a9ebf2593ee6fb926ba6789c07bab650abc2b
         } catch (err) {
-            const errorCode = err.code;
-
-            if (errorCode === "auth/popup-closed-by-user") {
-                setError("Sign-in cancelled by user");
-            } else if (errorCode === "auth/popup-blocked") {
-                setError(
-                    "Popup blocked by browser. Please allow popups and try again."
-                );
+            if (err.code === "auth/popup-closed-by-user") {
+                setError("Sign-in cancelled by user.");
+            } else if (err.code === "auth/popup-blocked") {
+                setError("Popup blocked by browser. Please allow popups.");
             } else {
-                setError(err.message);
+                setError(err.message || "Google sign-in failed.");
             }
         } finally {
             setLoading(false);
@@ -86,7 +86,10 @@ const Login = () => {
             <div className="login-container">
                 <h2>Login</h2>
 
-                {/* Google Sign-In Button */}
+                {loginMessage && (
+                    <div className="login-message">{loginMessage}</div>
+                )}
+
                 <button
                     onClick={handleGoogleLogin}
                     disabled={loading}
@@ -117,15 +120,21 @@ const Login = () => {
                         required
                         disabled={loading}
                     />
+
                     {error && <p className="login-error">{error}</p>}
+<<<<<<< HEAD
                     {success && <p className="login-success">{success}</p>}
+=======
+
+>>>>>>> 6d4a9ebf2593ee6fb926ba6789c07bab650abc2b
                     <button type="submit" disabled={loading}>
                         {loading ? "Logging in..." : "Login"}
                     </button>
                 </form>
 
                 <p>
-                    Don't have an account? <Link to="/signup">Signup</Link>
+                    Don&apos;t have an account?{" "}
+                    <Link to="/signup">Signup</Link>
                 </p>
             </div>
         </div>

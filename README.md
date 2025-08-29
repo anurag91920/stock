@@ -18,7 +18,7 @@ The **Stock Analyzer** project is a complete stock market analysis tool utilizin
 
 ---
 
-![Open Source Connect India](Images/osci.png)
+![Open Source Connect India](Images/osconnect.png)
 
 ## Overview
 
@@ -151,7 +151,7 @@ Please make sure to:
 - Follow the [Setup Instructions](./SETUP.md) to run the project locally
 - Join the [Discord](https://discord.gg/ypQSaPbsDv)
 
-![Open Source Connect India](Images/osci.png)
+![Open Source Connect India](Images/osconnect.png)
 
 ## License
 

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Prediction from "./Prediction";
 import { ClipLoader } from "react-spinners";
 import { StockMetricsCard } from "./StockMetricsCard";
+import BackToTopBtn from "./BackToTopBtn";
 
 import SentimentChart from "./SentimentChart";
 
@@ -47,7 +48,7 @@ function Stockdata() {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/stock?ticker=${ticker}&chart_period=${chartPeriod}&table_period=${tablePeriod}`
+        `${process.env.REACT_APP_API_URL}/api/stock/${ticker}?chart_period=${chartPeriod}&table_period=${tablePeriod}`
       );
 
       setStockData(res.data.stock_data);
@@ -122,7 +123,7 @@ function Stockdata() {
       className="container"
       variants={containerVariants}
       initial="hidden"
-      animate="visible"
+      animate="visible"   
     >
       <h1 variants={itemVariants}></h1>
       {isLoading ? (
@@ -177,9 +178,9 @@ function Stockdata() {
                   low={stockInfo.low}
                   previousClose={stockData[0]?.Close}
                 />
-                <h1 className="exchange-badge">
+                {/* <h1 className="exchange-badge">
                   Exchange : {stockInfo.exchange || "N/A"}
-                </h1>
+                </h1> */}
               </div>
 
               <div className="period-buttons" variants={itemVariants}>
@@ -508,6 +509,7 @@ function Stockdata() {
           )}
         </div>
       )}
+      <BackToTopBtn />
     </div>
   );
 }
