@@ -4,7 +4,7 @@ Thank you for your interest in keeping the `stock` project secure. This document
 
 ---
 
-##  Supported Versions
+## Supported Versions
 
 We aim to keep `stock` up to date and secure. Please see below for the versions we currently support with security updates.
 
@@ -15,7 +15,7 @@ We aim to keep `stock` up to date and secure. Please see below for the versions 
 
 ---
 
-##  Reporting a Vulnerability
+## Reporting a Vulnerability
 
 If you discover a security vulnerability, **please do not open an issue** on GitHub.
 
@@ -35,6 +35,7 @@ Instead, follow these steps:
 ## Responsible Disclosure Guidelines
 
 We ask that you:
+
 - Do not publicly disclose the issue until it has been resolved.
 - Avoid testing vulnerabilities in a way that could disrupt services.
 - Act in good faith and with respect for user data and privacy.
@@ -45,6 +46,7 @@ We ask that you:
 
 - We follow a **coordinated disclosure** approach.
 - We appreciate responsible reporting and will publicly disclose the issue only **after a fix has been released**.
+
 ---
 
 ## Security Fixes & Releases

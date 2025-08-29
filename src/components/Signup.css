@@ -112,7 +112,7 @@
     cursor: not-allowed;
 }
 
-/* Add Google logo if desired */
+/* Google logo inside button */
 .google-login-btn::before {
     content: "";
     width: 18px;
@@ -142,4 +142,11 @@
     padding: 0 16px;
     color: #5f6368;
     font-size: 14px;
+}
+
+
+.success-message {
+    color: green;
+    margin-bottom: 15px;
+    font-weight: bold;
 }

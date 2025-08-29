@@ -1,4 +1,4 @@
-import { auth, database as db } from "../components/firebase";
+import { auth, db } from "../components/firebase"; 
 
 import {
   collection,

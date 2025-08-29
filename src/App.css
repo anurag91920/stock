@@ -1,7 +1,5 @@
 /* ==========================================================================
-   Stock Analyzer - Main Stylesheet (with Enhanced Header & Footer + Animations)
-   ========================================================================== */
-
+   Stock Analyzer - Main Stylesheet (with Enhanced Header & Footer + Anim
 /* --- Global & Base Styles --- */
 * {
   box-sizing: border-box;
@@ -682,7 +680,6 @@ svg {
 
 .table-container {
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
   width: 100%;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -960,7 +957,6 @@ strong {
   margin-bottom: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: slideInLeft 0.6s ease-out;
   border-radius: 10px;

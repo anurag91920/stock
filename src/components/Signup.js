@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     createUserWithEmailAndPassword,
     signInWithPopup,
     GoogleAuthProvider,
 } from "firebase/auth";
-import { auth, database } from "./firebase";
-import { ref, set } from "firebase/database";
+import { auth, db } from "./firebase";  // database की जगह db लिया
+import { doc, setDoc } from "firebase/firestore";  // Firestore के doc और setDoc
 import { Link, useNavigate } from "react-router-dom";
 import { syncLocalToFirebase } from "../utils/watchlistManager";
 import "./Signup.css";
@@ -16,11 +16,22 @@ const Signup = () => {
     const [confirm, setConfirm] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => {
+                navigate("/");
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [success, navigate]);
 
     const handleSignup = async (e) => {
         e.preventDefault();
         setError("");
+        setSuccess(false);
         setLoading(true);
 
         if (password !== confirm) {
@@ -30,25 +41,17 @@ const Signup = () => {
         }
 
         try {
-            // Create user with Firebase Auth
-            const userCredential = await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // Optional: Save additional user data to Realtime Database
-            await set(ref(database, `users/${user.uid}`), {
+            // Firestore में यूजर डाटा सेव करना
+            await setDoc(doc(db, "users", user.uid), {
                 email: user.email,
                 createdAt: new Date().toISOString(),
             });
 
-            // Sync local watchlist data to Firebase after signup
             await syncLocalToFirebase(user);
-
-            navigate("/"); // redirect to home page
+            setSuccess(true);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -58,41 +61,32 @@ const Signup = () => {
 
     const handleGoogleSignup = async () => {
         setError("");
+        setSuccess(false);
         setLoading(true);
 
         try {
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
-
             const user = result.user;
 
-            // Optional: Save additional user data to Realtime Database
-            await set(ref(database, `users/${user.uid}`), {
+            await setDoc(doc(db, "users", user.uid), {
                 email: user.email,
                 displayName: user.displayName,
                 photoURL: user.photoURL,
                 createdAt: new Date().toISOString(),
             });
 
-            // Sync local watchlist data to Firebase after Google signup
             await syncLocalToFirebase(user);
-
-            navigate("/"); // redirect to home page
+            setSuccess(true);
         } catch (err) {
             const errorCode = err.code;
 
             if (errorCode === "auth/popup-closed-by-user") {
                 setError("Sign-up cancelled by user");
             } else if (errorCode === "auth/popup-blocked") {
-                setError(
-                    "Popup blocked by browser. Please allow popups and try again."
-                );
-            } else if (
-                errorCode === "auth/account-exists-with-different-credential"
-            ) {
-                setError(
-                    "An account already exists with this email. Try signing in instead."
-                );
+                setError("Popup blocked by browser. Please allow popups and try again.");
+            } else if (errorCode === "auth/account-exists-with-different-credential") {
+                setError("An account already exists with this email. Try signing in instead.");
             } else {
                 setError(err.message);
             }
@@ -106,7 +100,8 @@ const Signup = () => {
             <div className="login-container">
                 <h2>Sign Up</h2>
 
-                {/* Google Sign-Up Button */}
+                {success && <p className="success-message">Signup successful! Redirecting to home...</p>}
+
                 <button
                     onClick={handleGoogleSignup}
                     disabled={loading}

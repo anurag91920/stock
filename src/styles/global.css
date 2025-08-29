@@ -3,9 +3,6 @@
   /* Set base font size for rem units */
   font-size: 16px;
   line-height: 1.5;
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  text-size-adjust: 100%;
 
   /* Light Theme (default) */
   --color-bg: #ffffff;
@@ -54,29 +51,21 @@
   --input-text: #e2e8f0;
   --input-border: #4a5568;
   --input-focus: #4fd1c5;
-  --color-danger: #dc3545;
-  --color-danger-hover: #ff6b6b;
-  --color-success: #20c997;
-  --color-warning: #ffd43b;
-  --color-info: #3bc9db;
-  --input-bg: #2d3748;
-  --input-text: #e2e8f0;
-  --input-border: #4a5568;
-  --input-focus: #4fd1c5;
   --input-placeholder: #a0aec0;
   --input-hover-border: #718096;
 }
 
 /* Smooth transitions for theme changes */
 * {
-  transition: background-color var(--transition-speed) ease-in-out,
+  transition: 
+    background-color var(--transition-speed) ease-in-out,
     color var(--transition-speed) ease-in-out,
     border-color var(--transition-speed) ease-in-out,
     box-shadow var(--transition-speed) ease-in-out;
 }
 
 /* Disable transitions for initial page load */
-.theme-initial *,
+.theme-initial * ,
 .theme-initial *::before,
 .theme-initial *::after {
   transition: none !important;
@@ -153,6 +142,22 @@ body {
   }
 }
 
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Screen reader only utility class */
 .sr-only {
   position: absolute;
@@ -166,7 +171,7 @@ body {
   border: 0;
 }
 
-/* Remove default margin and padding */
+/* Remove default margin and padding for common elements */
 body,
 h1,
 h2,
@@ -201,22 +206,6 @@ textarea,
 select {
   font: inherit;
   color: inherit;
-}
-
-/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
-@media (prefers-reduced-motion: reduce) {
-  html:focus-within {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
 }
 
 /* Theme transitions */
@@ -254,9 +243,14 @@ html.theme-transition-ready,
 html.theme-transition-ready *,
 html.theme-transition-ready *::before,
 html.theme-transition-ready *::after {
-  transition: background-color 0.3s ease, border-color 0.3s ease,
-    color 0.3s ease, fill 0.3s ease, stroke 0.3s ease, opacity 0.3s ease,
-    box-shadow 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    fill 0.3s ease,
+    stroke 0.3s ease,
+    opacity 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 }
 
 /* Focus styles */
@@ -264,19 +258,6 @@ html.theme-transition-ready *::after {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
   border-radius: 0.25rem;
-}
-
-/* Utility classes */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 /* Container */
@@ -287,7 +268,6 @@ html.theme-transition-ready *::after {
   padding: 0 1rem;
 }
 
-/* Links */
 /* Form Elements */
 input,
 textarea,
@@ -324,21 +304,22 @@ textarea::placeholder {
   opacity: 1;
 }
 
-/* Buttons */
+/* Buttons - Base style */
 button {
   cursor: pointer;
   font-weight: 600;
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
   border-radius: var(--form-border-radius);
+  padding: 0.5rem 1rem;
   transition: all var(--transition-speed) ease;
   position: relative;
   overflow: hidden;
 }
 
 button:hover {
-  background-color: var(--color-primary-hover);
+  background-color: var(--color-bg-secondary);
   transform: translateY(-1px);
   box-shadow: 0 4px 8px var(--color-shadow);
 }
@@ -355,30 +336,7 @@ button:disabled {
   box-shadow: none !important;
 }
 
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Buttons */
-button {
-  cursor: pointer;
-  background: transparent;
-  border: 1px solid var(--color-border);
-  border-radius: 0.375rem;
-  padding: 0.5rem 1rem;
-  transition: all 0.2s ease;
-}
-
-button:hover {
-  background-color: var(--color-bg-secondary);
-}
-
+/* Buttons - Primary variant */
 button.primary {
   background-color: var(--color-primary);
   color: white;
@@ -388,4 +346,15 @@ button.primary {
 button.primary:hover {
   background-color: var(--color-primary-hover);
   border-color: var(--color-primary-hover);
+}
+
+/* Links */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
 }

@@ -14,11 +14,13 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(""); // Success message state
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setError("");
+        setSuccess("");
         setLoading(true);
 
         try {
@@ -32,7 +34,12 @@ const Login = () => {
             // Sync local data to Firebase after login
             await syncLocalToFirebase(userCredential.user);
 
-            navigate("/"); // redirect to home page
+            setSuccess("Login successful! Redirecting...");
+
+            // Delay navigation by 1.5 seconds to show message
+            setTimeout(() => {
+                navigate("/"); // redirect to home page
+            }, 1500);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -42,6 +49,7 @@ const Login = () => {
 
     const handleGoogleLogin = async () => {
         setError("");
+        setSuccess("");
         setLoading(true);
 
         try {
@@ -51,7 +59,11 @@ const Login = () => {
             // Sync local data to Firebase after Google login
             await syncLocalToFirebase(result.user);
 
-            navigate("/"); // redirect to home page
+            setSuccess("Login successful! Redirecting...");
+
+            setTimeout(() => {
+                navigate("/"); // redirect to home page
+            }, 1500);
         } catch (err) {
             const errorCode = err.code;
 
@@ -106,6 +118,7 @@ const Login = () => {
                         disabled={loading}
                     />
                     {error && <p className="login-error">{error}</p>}
+                    {success && <p className="login-success">{success}</p>}
                     <button type="submit" disabled={loading}>
                         {loading ? "Logging in..." : "Login"}
                     </button>

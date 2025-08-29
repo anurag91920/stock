@@ -117,3 +117,10 @@
     font-size: 14px;
 }
 
+.login-success {
+    color: green;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: 600;
+}
+/* Google login button styling */
